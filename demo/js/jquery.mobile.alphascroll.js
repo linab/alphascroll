@@ -6,22 +6,21 @@
 
 			return this.each( function() {
 
-				var content  = $( this );
-				var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-				var alphabet_short = ['a','d','g','j','m','p','s','w','z'];
-				var dividers = [];
-				var divider_class;
-				var scrollbar = '';
+				var content  = $( this ),
+					alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'],
+					shortAlphabet = ['a','d','g','j','m','p','s','w','z'],
+					dividers = [],
+					dividerClass,
+					scrollbar = '';
 
 				// attach classes to list autodividers
 				$( content ).find( '.ui-li-divider' ).each( function() {
-					divider_class = $( this ).html().toLowerCase();
-					dividers.push( divider_class );
-					$( this ).addClass( divider_class );
+					dividerClass = $( this ).html().toLowerCase();
+					dividers.push( dividerClass );
+					$( this ).addClass( dividerClass );
 				});
 
 				// create and display the scrollbar
-				createScrollbar();
 				function createScrollbar() {
 					// generate scrollbar HTML
 					$( alphabet ).each( function( index, value ) {
@@ -91,7 +90,7 @@
 
 				function truncateScrollbar() {
 					$( '.alphascroll li' ).each( function( index, value ) {
-						if ( $.inArray( $( this ).html().toLowerCase(), alphabet_short ) < 0 ) {
+						if ( $.inArray( $( this ).html().toLowerCase(), shortAlphabet ) < 0 ) {
 							$( this ).html( '&#183;' ).addClass( 'truncated' );
 						}
 					});
@@ -101,11 +100,11 @@
 				function alphaScroll( y ) {
 					$( '.alphascroll-item' ).each( function() {
 						if ( ! ( y <= $( this ).offset().top || y >= $( this ).offset().top + $( this ).outerHeight() ) ) {
-							var scroll_id = $( this ).attr( 'id' );
-							var letter    = scroll_id.split( '-' );
-							var target    = $( '.' + letter[1] );
-							var position  = target.position();
-							var header_height;
+							var scroll_id = $( this ).attr( 'id' ),
+								letter    = scroll_id.split( '-' ),
+								target    = $( '.' + letter[1] ),
+								position  = target.position(),
+								header_height;
 
 							// offset scroll-top if header is displayed
 							if ( $( '.ui-page-active [data-role="header"]' ).hasClass( 'ui-fixed-hidden' ) ) {
@@ -121,6 +120,8 @@
 					});
 				}
 
+				// generate scrollbar on invokation
+				createScrollbar();
 			});
 		}
 	});
